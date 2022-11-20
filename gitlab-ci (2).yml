@@ -1,0 +1,85 @@
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
+before_script:
+  - $PSVersionTable.PSVersion
+  - dotnet --version
+  - nuget help | select-string Version
+
+stages:
+  - build
+  - test
+  - deploy
+
+.common_tags: &common_tags
+  tags:
+    - windows
+.common_only: &common_only
+  only:
+    - merge_requests
+    - master
+.master_only: &master_only
+  only:
+    - master
+
+build job2:
+  <<: *common_tags
+  <<: *common_only
+
+build job:
+  stage: build
+  script:
+    - dotnet build -c Release
+  artifacts:
+    paths:
+      - your/path/to/binaries
+  <<: *common_tags
+  <<: *common_only
+
+test and cover job:
+  stage: test
+  script:
+    - dotnet test -c Release /p:CollectCoverage=true
+  coverage: /\|\s*Total\s*\|\s*(\d+[,.]\d+%)/
+  <<: *common_tags
+  <<: *common_only
+
+pack and deploy job:
+  stage: deploy
+  script:
+    - dotnet pack -c Release -o .
+    - dotnet new nugetconfig
+    - nuget sources add -name feedName -source https://pkgs.dev.azure.com/your-organization/_packaging/your-feed/nuget/v3/index.json -username your-organization -password $nugetFeedToken -configfile nuget.config -StorePasswordInClearText
+    - nuget push -source feedName -skipduplicate -apikey az *.nupkg
+  <<: *common_tags
+  <<: *master_only
+
+pages:
+  stage: deploy
+  script:
+    - nuget install docfx.console -version 2.51.0
+    - $env:path = "$env:path;$($(get-location).Path)"
+    - .\docfx.console.2.51.0\tools\docfx.exe .\docfx\docfx.json
+  artifacts:
+    paths:
+      - public
+  <<: *common_tags
+  <<: *master_only
+
+# регулярное выражение для поиска строки с версией
+#$rx = "release\s+(v\.?|ver\.?|version)\s*(?<maj>\d+)(?<min>\.\d+)?(?<rel>\.\d+)?\s*((rev\.?|revision)?\s+(?<rev>[a-zA-Z0-9-_]+))?"
+# ищем строку в сообщении коммита, передаваемом в одной из предопределяемых GitLab'ом переменных
+#$found = $env:CI_COMMIT_MESSAGE -match $rx
+# совпадений нет - выходим
+#if (!$found) { Write-Output "no release info found, aborting"; exit }
+# извлекаем мажорную и минорную версии
+#$maj = $matches['maj']
+#$min = $matches['min']
+# если строка содержит номер релиза - используем его, иначе - текущий год
+#if ($matches.ContainsKey('rel')) { $rel = $matches['rel'] } else { $rel = ".$(get-date -format "yyyy")" }
+# в качестве номера сборки - текущие месяц и день
+#$bld = $(get-date -format "MMdd")
+# если есть данные по пререлизной версии - включаем их в версию
+#if ($matches.ContainsKey('rev')) { $rev = "-$($matches['rev'])" } else { $rev = '' }
+# собираем единую строку версии
+#$version = "$maj$min$rel.$bld$rev"
+#dotnet pack -c Release -o . /p:Version=$version

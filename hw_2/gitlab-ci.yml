@@ -1,0 +1,156 @@
+AAPL:
+  - shares: -75.088
+    date: 11/27/2015
+  - shares: 75.088
+    date: 11/26/2015
+
+# Mappings
+# flow style
+Mappings_flow: { foo: 1, bar: 2 }
+
+# block style
+Mappings_block:
+  foo: 1
+  bar: 2
+
+# Последовательности
+# flow style
+Sequences_flow: [ foo bar, baz ]
+
+# block style
+Sequences_block:
+  - foo bar
+  - baz
+
+# Руководство по CI/CD в GitLab для (почти) абсолютного новичка: https://habr.com/ru/post/498436/
+
+# ссылка на docker-образ, в котором будет происходить выполнение задач
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
+# Для отладки имеет смысл получить информацию об окружении, в котором исполняются задачи.
+# Добавим глобальный набор команд, который будет выполняться перед каждой задачей
+
+before_script:
+  - $PSVersionTable.PSVersion
+  - dotnet --version
+  - nuget help | select-string Version
+
+# stage'ы. По умолчанию GitLab определяет 5 этапов:
+# .pre — выполняется до всех этапов,
+# .post — выполняется после всех этапов,
+# build — первый после .pre этап,
+# test — второй этап,
+# deploy — третий этап.
+
+# Порядок, в котором указаны этапы, влияет на порядок, в котором они выполняются
+stages:
+  - build
+  - test
+  - deploy
+
+# Переиспользование фрагментов
+# Выделяем общие фрагменты конфигурации
+# Как видно из настроек задач, все они требуют наличия тега windows у раннера,
+# и срабатывают при отправке в мастер/создании запроса на слияние (кроме документации)
+.common_variables: &common_variables
+  variables:
+    sources: { name: feedName, source: https://pkgs.dev.azure.com/your-organization/_packaging/your-feed/nuget/v3/index.json, username: your-organization, password: $nugetFeedToken, config: nuget.config }
+# какие теги должны быть у исполняющего пайплайн раннера
+.common_tags: &common_tags
+  tags:
+    - windows
+# Настройка триггеров
+# правила rules не совместимы с правилами only/except
+.common_only: &common_only
+  only:
+    - merge_requests
+    - master
+.master_only: &master_only
+  only:
+    - master
+
+# Tasks
+
+# сборка проекта
+# Мы хотим релизную, а не отладочную сборку, поэтому к каждой команде добавляем -c Release
+build job:
+  stage: build
+  # список скриптов, исполняемых при запуске задачи
+  script:
+    - dotnet build -c Release
+  # Настройка сохранения артефактов
+  artifacts:
+    paths:
+      - your/path/to/binaries
+  # И теперь в описании задачи можем вставить объявленный ранее фрагмент
+  <<: *common_tags
+  <<: *common_only
+
+# тестирование и покрытие кода
+# При тестировании мы хотим собирать данные о покрытии кода - потребуется подключить анализатор покрытия в тестовые библиотеки
+# Во все тестовые библиотеки следует добавить пакет coverlet.msbuild: dotnet add package coverlet.msbuild из папки проекта
+# В команду запуска тестов добавим /p:CollectCoverage=true
+# В конфигурацию задачи тестирования добавим ключ (coverage) для получения результатов покрытия
+test and cover job:
+  stage: test
+  script:
+    - dotnet test -c Release /p:CollectCoverage=true
+  # Собираем данные покрытия кода
+  # GitLab позволяет указать регулярное выражение для получения статистики, которую потом можно получить в виде бейджа
+  # Регулярное выражение указывается в настройках задачи с ключом coverage
+  # в выражении должна присутствовать capture-группа, значение которой и будет передано в бейдж
+  coverage: /\|\s*Total\s*\|\s*(\d+[,.]\d+%)/
+  <<: *common_tags
+  <<: *common_only
+
+# Публикуем пакеты и документацию
+pack and deploy job:
+  <<: *common_variables
+  stage: deploy
+  script:
+    # При упаковке кода в nuget-пакеты зададим выходную директорию для пакетов: -o .
+    - dotnet pack -c Release -o .
+    # Если в проекте не присутствует файл конфигурации nuget (nuget.config), создадим новый
+    # в образе может быть запрещён доступ на запись к глобальным (пользовательской и машинной) конфигурациям.
+    # Чтобы не ловить ошибки, просто создадим новую локальную конфигурацию и будем работать с ней
+    - dotnet new nugetconfig
+    # Добавим в локальную конфигурацию новый источник пакетов
+    # nuget sources add -name <name> -source <url> -username <organization> -password <gitlab variable> -configfile nuget.config -StorePasswordInClearText
+    # name — локальное имя источника, не приниципиально
+    # url — URL источника из этапа "Готовим аккаунты", п. 6
+    # organization — название организации в Azure DevOps
+    # gitlab variable — имя переменной с токеном доступа, добавленной в GitLab ("Готовим аккаунты", п. 11). Естественно, в формате $variableName
+    # -StorePasswordInClearText — хак для обхода ошибки отказа в доступе (не я первый на эти грабли наступил)
+    # На случай ошибок может быть полезным добавить -verbosity detailed
+    - nuget sources add -name $sources:name -source $sources:source -username $sources:username -password $sources:password -configfile $sources:config -StorePasswordInClearText
+    # Отправляем пакет в источник
+    # nuget push -source <name> -skipduplicate -apikey <key> *.nupkg
+    # Отправляем все пакеты из текущей директории, поэтому *.nupkg.
+    # name — из шага выше.
+    # key — любая строка. В Azure DevOps в окне Connect to feed всегда в качестве примера приводят строку az.
+    # -skipduplicate — при попытке отправить уже существующий пакет без этого ключа источник вернёт ошибку 409 Conflict; с ключом отправка будет пропущена
+    - nuget push -source feedName -skipduplicate -apikey az *.nupkg
+  <<: *common_tags
+  <<: *master_only
+
+# Создание документации
+# Для начала, в репозитории, в ветке master, инициализируем проект docfx.
+# из корня надо выполнить команду docfx init и в интерактивном режиме зададим ключевые параметры для сборки документации
+# При настройке важно указать выходную директорию ..\public
+# GitLab по умолчанию берёт содержимое папки public в корне репозитория как источник для Pages.
+# Т.к. проект будет располагаться во вложенной в репозиторий папке — добавляем в путь выход на уровень вверх
+# Отправим изменения в GitLab
+# В конфигурацию пайплайна добавим задачу pages (зарезервированное слово для задач публикации сайтов в GitLab Pages)
+pages:
+  stage: deploy
+  script:
+    # установит docfx; версия указана для гарантии правильности путей установки пакета
+    - nuget install docfx.console -version 2.51.0
+    - $env:path = "$env:path;$($(get-location).Path)"
+    # собираем документацию
+    - .\docfx.console.2.51.0\tools\docfx.exe .\docfx\docfx.json
+  artifacts:
+    paths:
+      - public
+  <<: *common_tags
+  <<: *master_only

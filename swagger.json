@@ -1,0 +1,776 @@
+{
+"openapi": "3.0.0",
+"info": {
+    "description": "REST API платформы QAStart",
+    "version": "1.0.0",
+    "title": "QAStart API Docs"
+    },
+"paths": {
+    "/signup": {
+      "post": {
+        "tags": [
+          "SignUp"
+        ],
+        "summary": "Регистрация нового пользователя",
+        "requestBody": {
+            "description": "Request Body для регистрации нового пользователя",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "123",
+                  "properties": {
+
+                  },
+                  "$ref": "#/components/schemas/signup_request_body"
+                }
+              }
+            }
+          },
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/signup"
+                  }
+                }
+              }
+          },
+          "400": {
+            "description": "Ошибка в запросе.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          },
+          "500": {
+            "description": "Ошибка на сервере.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          }
+        }
+
+      }
+    },
+    "/signin": {
+      "post": {
+        "tags": [
+          "SignIn"
+        ],
+        "summary": "Вход в систему по email и password для получения Auth-токена",
+        "requestBody": {
+            "description": "Request Body для получения Auth-токена",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/signin_request_body"
+                }
+              }
+            }
+          },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/token"
+                  }
+                }
+              }
+          },
+          "400": {
+            "description": "Ошибка в запросе.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          },
+          "500": {
+            "description": "Ошибка на сервере.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          }
+        }
+
+      }
+    },
+    "/users": {
+      "get": {
+        "parameters": [
+            {
+            "name": "Access-Token",
+            "in": "header",
+            "description": "Auth Token Header",
+            "required": true,
+            "type": "string"
+            },
+            {
+            "name": "name",
+            "in": "query",
+            "description": "Имя пользователя",
+            "required": false,
+            "type": "string"
+            },
+            {
+            "name": "email",
+            "in": "query",
+            "description": "Email пользователя",
+            "required": false,
+            "type": "integer"
+            },
+            {
+            "name": "page",
+            "in": "query",
+            "description": "Страница с пользователями",
+            "default": 1,
+            "required": false,
+            "type": "integer"
+            },
+            {
+            "name": "per_page",
+            "in": "query",
+            "description": "Кол-во пользователей на одной странице ",
+            "default": 10,
+            "required": false,
+            "type": "integer"
+            }
+    ],
+        "tags": [
+          "User"
+        ],
+        "summary": "Получить список всех пользователей",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/users"
+                  }
+                }
+              }
+          },
+          "400": {
+            "description": "Ошибка в запросе.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          },
+          "500": {
+            "description": "Ошибка на сервере.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          }
+        }
+
+      }
+    },
+    "/user": {
+        "parameters": [
+            {
+                "name": "Access-Token",
+                "in": "header",
+                "description": "Auth Token Header",
+                "required": true,
+                "type": "string"
+            }            
+          ],
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Создать пользователя",
+          "requestBody": {
+            "description": "Request Body для получения информации о пользователе",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_create_request_body",
+                  "enum": ["role"]
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "CREATED",
+              "content": {
+                "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/get_user"
+              }
+            }
+            }
+        },
+        "400": {
+            "description": "Ошибка в запросе.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          },
+          "500": {
+            "description": "Ошибка на сервере.",
+            "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/error"
+                  }
+                }
+              }
+          }
+          }
+        }
+      },
+    "/user/{id}": {
+        "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID пользователя",
+              "type": "string"
+            },
+            {
+                "name": "Access-Token",
+                "in": "header",
+                "description": "Auth Token Header",
+                "required": true,
+                "type": "string"
+            }            
+          ],
+        "get": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Получить информацию о пользователе",
+          "responses": {
+            "200": {
+                "description": "OK",
+                "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/get_user"
+                      }
+                    }
+                  }
+              },
+            "400": {
+                "description": "Ошибка в запросе.",
+                "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/error"
+                      }
+                    }
+                  }
+              },
+              "500": {
+                "description": "Ошибка на сервере.",
+                "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/error"
+                      }
+                    }
+                  }
+              }
+          }
+  
+        },
+        "put": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Изменить информацию о пользователе",
+          "requestBody": {
+            "description": "Request Body для изменения информации о пользователе",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_update_request_body"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "CREATED",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/get_user"
+                  }
+                }
+              }
+            },
+            "400": {
+                "description": "Ошибка в запросе.",
+                "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/error"
+                      }
+                    }
+                  }
+              },
+              "500": {
+                "description": "Ошибка на сервере.",
+                "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/error"
+                      }
+                    }
+                  }
+              }
+          }
+        },
+        "delete": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Удалить пользователя",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/user_delete"
+                  }
+                }
+              }
+            },
+            "400": {
+                "description": "Ошибка в запросе.",
+                "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/error"
+                      }
+                    }
+                  }
+              },
+              "500": {
+                "description": "Ошибка на сервере.",
+                "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/error"
+                      }
+                    }
+                  }
+              }
+          }
+        }
+      }
+    
+
+  },
+  "components": {
+    "schemas": {
+        "users": {
+            "properties": {
+                "uuid": {
+                    "type": "integer",
+                    "format": "id",
+                    "example": 1,
+                    "description": "ID пользователя"
+
+                },
+                "name": {
+                    "type": "string",
+                    "format": "name",
+                    "example": "Ivan",
+                    "description": "Имя пользователя"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email пользователя"
+                },
+                "role": {
+                    "type": "string",
+                    "format": "role",
+                    "example": "USER",
+                    "description": "Роль пользователя"
+                }
+            }
+        },
+        "get_user": {
+            "properties": {
+                "uuid": {
+                    "type": "integer",
+                    "format": "id",
+                    "example": 1,
+                    "description": "ID пользователя"
+                },
+                "name": {
+                    "type": "string",
+                    "format": "name",
+                    "example": "Ivan",
+                    "description": "Имя пользователя"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email пользователя"
+                },
+                "age": {
+                    "type": "integer",
+                    "format": "age",
+                    "example": "25",
+                    "description": "Возраст пользователя"
+                },
+                "phone": {
+                    "type": "number",
+                    "format": "phone",
+                    "example": "+79143324567",
+                    "description": "Номер телефона пользователя"
+                },
+                "role": {
+                    "type": "string",
+                    "format": "role",
+                    "example": "USER",
+                    "description": "Роль пользователя"
+                },
+                "locale": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "Локаль пользователя"
+                },
+                "notify": {
+                    "type": "boolean",
+                    "format": "boolean",
+                    "example": true,
+                    "description": "Получать уведомления по почте"
+                },
+                "personal_data_acess": {
+                    "type": "boolean",
+                    "format": "boolean",
+                    "example": true,
+                    "description": "Разрешение на использование персональных данных"
+                }
+            }
+        },
+        "signup": {
+          "description": "Response о том, что пользователь успешно зарегистрирован.",
+          "required" : ["message", "uuid", "name", "email"],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "format": "string",
+                    "nullabe": false,
+                    "example": "User successfully created."
+                },
+                "uuid": {
+                    "type": "integer",
+                    "format": "id",
+                    "nullabe": false,
+                    "example": 1,
+                    "description": "ID пользователя"
+                },
+                "name": {
+                  "type": "string",
+                  "format": "name",
+                  "nullabe": false,
+                  "min_lenght": 3,
+                  "max_lenght": 30,
+                  "pattern": "^[A-Za-z0-9._-]({3,30})$",
+                  "example": "Ivan",
+                  "description": "Имя пользователя"
+              },
+              "email": {
+                  "type": "string",
+                  "format": "email",
+                  "nullabe": false,
+                  "min_lenght":6,
+                  "max_lenght": 150,
+                  "pattern": "^([A-Za-z0-9._-])+@([A-Za-z0-9._-])+.([A-Za-z]{2,63})$",
+                  "description": "Email пользователя. {2,63} в паттерне обозначает минимальное и макимальное кол-во символов в каждой части email."
+
+              }
+            }
+        },
+        "signup_request_body": {
+            "description": "Данные для регистрации пользователя",
+            "required" : ["name", "email", "password", "personal_data_access"],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "format": "name",
+                    "nullabe": false,
+                    "min_lenght": 6,
+                    "max_lenght": 30,
+                    "pattern": "^[A-Za-z0-9._-]({3,30})$",
+                    "example": "Ivan",
+                    "description": "Имя пользователя"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "nullabe": false,
+                    "min_lenght":6,
+                    "max_lenght": 150,
+                    "pattern": "^([A-Za-z0-9._-])+@([A-Za-z0-9._-])+.([A-Za-z]{2,63})$",
+                    "description": "Email пользователя. {2,63} в паттерне обозначает минимальное и макимальное кол-во символов в каждой части email."
+
+                },
+                "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "123AAAbbbCCCdd0",
+                    "min_lenght": 8,
+                    "max_lenght": 50,
+                    "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*/d).{8,50}$",
+                    "nullabe": false,
+                    "description": "Пароль"
+                },
+                "notify": {
+                    "type": "boolean",
+                    "format": "boolean",
+                    "example": true,
+                    "description": "Получать уведомления по почте"
+                },
+                "personal_data_access": {
+                    "type": "boolean",
+                    "format": "boolean",
+                    "example": true,
+                    "nullabe": false,
+                    "description": "Разрешение на использование персональных данных"
+                },
+                "locale": {
+                  "type": "string",
+                  "format": "string",
+                  "example": "ru-RU",
+                  "enum": ["ru-RU", "en-EN"],
+                  "description": "Локаль пользователя"
+              }
+            }
+        },
+        "signin_request_body": {
+            "description": "Данные для авторизации пользователя",
+            "required" : ["email", "password"],
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "min_lenght": 3,
+                "max_lenght": 63,
+                "pattern": "^([A-Za-z0-9._-])+@([A-Za-z0-9._-])+.([A-Za-z]{2,63})$",
+                "nullabe": false,
+                "description": "Email пользователя"
+
+            },
+            "password": {
+                "type": "string",
+                "format": "password",
+                "example": "123AAAbbbCCCdd0",
+                "min_lenght": 8,
+                "max_lenght": 50,
+                "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*/d).{8,50}$",
+                "nullabe": false,
+                "description": "Пароль"
+            }
+            }
+        },
+        "user_create_request_body": {
+          "description": "Данные для создания пользователя",
+          "required" : ["email", "name"],
+            "properties": {
+              "name": {
+                  "type": "string",
+                  "format": "name",
+                  "nullabe": false,
+                  "min_lenght": 3,
+                  "max_lenght": 30,
+                  "pattern": "^[A-Za-z0-9._-]({3,30})$",
+                  "example": "Ivan",
+                  "description": "Имя пользователя"
+              },
+              "email": {
+                  "type": "string",
+                  "format": "email",
+                  "min_lenght": 6,
+                  "max_lenght": 150,
+                  "pattern": "^([A-Za-z0-9._-])+@([A-Za-z0-9._-])+.([A-Za-z]{2,63})$",
+                  "nullabe": false,
+                  "description": "Email пользователя"
+              },
+              "age": {
+                  "type": "integer",
+                  "format": "age",
+                  "nullabe": true,
+                  "example": "25",
+                  "description": "Возраст пользователя"
+              },
+              "phone": {
+                  "type": "number",
+                  "format": "phone",
+                  "nullabe": true,
+                  "example": "+79851234567",
+                  "description": "Номер телефона пользователя"
+              },
+              "role": {
+                  "type": "string",
+                  "format": "role",
+                  "nullabe": true,
+                  "example": "USER",
+                  "description": "Роль пользователя",
+                  "enum": ["USER", "ADMIN", "ORGANIZATION"]
+              },
+              "locale": {
+                  "type": "string",
+                  "format": "string",
+                  "example": "ru-RU",
+                  "enum": ["ru-RU", "en-EN"],
+                  "description": "Локаль пользователя"
+              },
+              "notify": {
+                  "type": "boolean",
+                  "format": "boolean",
+                  "example": true,
+                  "description": "Получать уведомления по почте"
+              }
+            }
+        },
+        "user_update_request_body": {
+          "description": "Данные для авторизации пользователя",
+          "required" : ["email", "name", "role", "phone", "notify"],
+            "properties": {
+                "name": {
+                "type": "string",
+                "format": "name",
+                "nullabe": false,
+                "example": "Ivan",
+                "description": "Имя пользователя"
+                },
+              "role": {
+                "type": "string",
+                "format": "role",
+                "nullabe": false,
+                "example": "USER",
+                "enum": ["USER", "ADMIN", "ORGANIZATION"],
+                "description": "Роль пользователя"
+                },
+              "phone": {
+                "type": "number",
+                "format": "phone",
+                "nullabe": false,
+                "example": "+79143324567",
+                "description": "Номер телефона пользователя"
+                },
+              "age": {
+                "type": "integer",
+                "format": "age",
+                "nullabe": true,
+                "example": "25",
+                "description": "Возраст пользователя"
+                },
+              "locale": {
+                "type": "string",
+                "format": "string",
+                "example": "ru-RU",
+                "enum": ["ru-RU", "en-EN"],
+                "description": "Локаль пользователя"
+                },
+                "notify": {
+                "type": "boolean",
+                "format": "boolean",
+                "description": "Получать уведомления по почте"
+                }
+
+            }
+        },
+        "user_delete": {
+          "properties": {
+              "message": {
+                "type": "string",
+                "format": "error",
+                "example": "User with id 1 successfully deleted."
+              }
+          }
+      },
+        "error": {
+          "description": "Сообщение об ошибке",
+          "required" : ["message"],
+            "properties": {
+                "message": {
+                  "type": "string",
+                  "format": "error",
+                  "nullabe": false,
+                  "example": "Something went wrong."
+                }
+            }
+        },
+        "token": {
+          "description": "Response получения token'а для доступа в непубличные методы после успешной авторизации.",
+          "required" : ["message", "uuid", "token"],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "format": "error",
+                    "nullabe": false,
+                    "example": "Success"
+                },
+                "uuid": {
+                    "type": "string",
+                    "format": "error",
+                    "nullabe": false,
+                    "example": 1
+                },
+                "token": {
+                    "type": "string",
+                    "format": "error",
+                    "nullabe": false,
+                    "example": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                }
+            }
+        }
+    }
+  }
+}

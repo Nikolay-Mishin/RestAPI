@@ -1,0 +1,22 @@
+1) XML
+curl --location --request POST 'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL' \
+--header 'Content-Type: text/xml' \
+--data-raw '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+    <Body>
+        <FullCountryInfo xmlns="http://www.oorsprong.org/websamples.countryinfo">
+            <sCountryISOCode>NO</sCountryISOCode>
+        </FullCountryInfo>
+    </Body>
+</Envelope>'
+
+2) JSON
+curl --location --request POST 'https://cdn/server.php' \
+--header 'Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njg5NDA1MTAsImlhdCI6MTY2ODg1NDExMCwic3ViIjozOH0.0JXnguN-d0UmUnC8nk6lApTyVMXcHFpVPsVOnKhhfBI' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "action": "getComments",
+    "data": {
+        "users": "data/restAPI/users.json",
+        "comments": "data/restAPI/comments.json"
+    }
+}'
