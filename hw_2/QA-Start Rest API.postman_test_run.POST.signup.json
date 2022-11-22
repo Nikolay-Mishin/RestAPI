@@ -1,17 +1,17 @@
 {
-	"id": "6cc648f5-00fe-44e5-8491-5468af57334b",
+	"id": "891f0a2b-b964-46e7-9f77-26b2e64738c5",
 	"name": "QA/Start Rest API",
-	"timestamp": "2022-11-22T16:32:08.827Z",
+	"timestamp": "2022-11-22T16:56:42.825Z",
 	"collection_id": "23817721-cd82d629-05d1-42c0-87c4-8cf5d64aff4e",
 	"folder_id": 0,
-	"environment_id": "23817721-2461d231-7f2d-4af6-bf0d-ce5c37749216",
-	"totalPass": 8,
-	"totalFail": 13,
+	"environment_id": "0",
+	"totalPass": 7,
+	"totalFail": 14,
 	"results": [
 		{
 			"id": "3aedbd2d-c70c-4adc-8bce-775d54436b51",
 			"name": "signup",
-			"time": 139,
+			"time": 114,
 			"responseCode": {
 				"code": 400,
 				"name": "BAD REQUEST"
@@ -31,24 +31,24 @@
 					"fail": 7
 				},
 				"Verify POST request": {
-					"pass": 1,
-					"fail": 6
+					"pass": 0,
+					"fail": 7
 				}
 			},
 			"times": [
-				304,
-				131,
-				123,
-				114,
-				225,
-				108,
-				139
+				196,
+				130,
+				124,
+				110,
+				146,
+				117,
+				114
 			],
 			"allTests": [
 				{
 					"Is JSON": true,
 					"Response don't have error message": false,
-					"Verify POST request": true
+					"Verify POST request": false
 				},
 				{
 					"Is JSON": true,
@@ -84,7 +84,7 @@
 		}
 	],
 	"count": 7,
-	"totalTime": 1144,
+	"totalTime": 937,
 	"collection": {
 		"requests": [
 			{
