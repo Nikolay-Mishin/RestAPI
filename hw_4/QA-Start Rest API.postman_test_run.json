@@ -1,0 +1,1163 @@
+{
+	"id": "116806c9-a748-4f1d-a0ee-f7e9dcbb3529",
+	"name": "QA/Start Rest API",
+	"timestamp": "2022-12-03T13:58:38.072Z",
+	"collection_id": "23817721-cd82d629-05d1-42c0-87c4-8cf5d64aff4e",
+	"folder_id": 0,
+	"environment_id": "23817721-2461d231-7f2d-4af6-bf0d-ce5c37749216",
+	"totalPass": 124,
+	"totalFail": 21,
+	"results": [
+		{
+			"id": "3aedbd2d-c70c-4adc-8bce-775d54436b51",
+			"name": "signup",
+			"url": "https://api.stand-bugs.qastart.ru/signup",
+			"time": 243,
+			"responseCode": {
+				"code": 201,
+				"name": "CREATED"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": false,
+				"Is JSON": true,
+				"Response have a message": true,
+				"Required field 'message' is set": true,
+				"Check type 'message'": true,
+				"Required field 'uuid' is set": true,
+				"Check type 'uuid'": true,
+				"Required field 'name' is set": true,
+				"Check type 'name'": true,
+				"Required field 'email' is set": true,
+				"Check type 'email'": true,
+				"Body is correct": true,
+				"Response not have unknown property (not in schema): ": true
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'message' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'message'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'uuid' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'uuid'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'name' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'name'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'email' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'email'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response not have unknown property (not in schema): ": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				243
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": false,
+					"Is JSON": true,
+					"Response have a message": true,
+					"Required field 'message' is set": true,
+					"Check type 'message'": true,
+					"Required field 'uuid' is set": true,
+					"Check type 'uuid'": true,
+					"Required field 'name' is set": true,
+					"Check type 'name'": true,
+					"Required field 'email' is set": true,
+					"Check type 'email'": true,
+					"Body is correct": true,
+					"Response not have unknown property (not in schema): ": true
+				}
+			]
+		},
+		{
+			"id": "26319eef-a732-4458-bc8d-f8ca3a0e7219",
+			"name": "signin",
+			"url": "https://api.stand-bugs.qastart.ru/signin",
+			"time": 129,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": true,
+				"Response contains access": true,
+				"Verify that current user (uuid = 38) is signUp user (uuid = 399)": false,
+				"Required field 'message' is set": true,
+				"Check type 'message'": true,
+				"Required field 'uuid' is set": true,
+				"Check type 'uuid'": false,
+				"Required field 'token' is set": true,
+				"Check type 'token'": true,
+				"Body is correct": false,
+				"Response not have unknown property (not in schema): ": true
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains access": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify that current user (uuid = 38) is signUp user (uuid = 399)": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'message' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'message'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'uuid' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'uuid'": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'token' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'token'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response not have unknown property (not in schema): ": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				129
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": true,
+					"Response contains access": true,
+					"Verify that current user (uuid = 38) is signUp user (uuid = 399)": false,
+					"Required field 'message' is set": true,
+					"Check type 'message'": true,
+					"Required field 'uuid' is set": true,
+					"Check type 'uuid'": false,
+					"Required field 'token' is set": true,
+					"Check type 'token'": true,
+					"Body is correct": false,
+					"Response not have unknown property (not in schema): ": true
+				}
+			]
+		},
+		{
+			"id": "20c111ec-cd33-44d2-9581-193aa06debcc",
+			"name": "users",
+			"url": "https://api.stand-bugs.qastart.ru/users",
+			"time": 82,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": false,
+				"Required field 'page' is set": true,
+				"Check type 'page'": true,
+				"Required field 'per_page' is set": true,
+				"Check type 'per_page'": true,
+				"Required field 'total_pages' is set": true,
+				"Check type 'total_pages'": true,
+				"Required field 'data' is set": true,
+				"Check type 'data'": true,
+				"Body is correct": true,
+				"Response not have unknown property (not in schema): ": true
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'page' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'page'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'per_page' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'per_page'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'total_pages' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'total_pages'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'data' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'data'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response not have unknown property (not in schema): ": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				82
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": false,
+					"Required field 'page' is set": true,
+					"Check type 'page'": true,
+					"Required field 'per_page' is set": true,
+					"Check type 'per_page'": true,
+					"Required field 'total_pages' is set": true,
+					"Check type 'total_pages'": true,
+					"Required field 'data' is set": true,
+					"Check type 'data'": true,
+					"Body is correct": true,
+					"Response not have unknown property (not in schema): ": true
+				}
+			]
+		},
+		{
+			"id": "fba4a060-746d-41cd-82bd-c0e857f4ea8d",
+			"name": "user",
+			"url": "https://api.stand-bugs.qastart.ru/user",
+			"time": 71,
+			"responseCode": {
+				"code": 201,
+				"name": "CREATED"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": false,
+				"Required field 'uuid' is set": true,
+				"Check type 'uuid'": true,
+				"Required field 'name' is set": true,
+				"Check type 'name'": true,
+				"Required field 'email' is set": true,
+				"Check type 'email'": true,
+				"Required field 'age' is set": true,
+				"Check type 'age'": true,
+				"Required field 'phone' is set": true,
+				"Check type 'phone'": false,
+				"Required field 'role' is set": true,
+				"Check type 'role'": true,
+				"Check type 'locale'": true,
+				"Required field 'notify' is set": true,
+				"Check type 'notify'": true,
+				"Required field 'personal_data_access' is set": true,
+				"Check type 'personal_data_access'": true,
+				"Body is correct": false,
+				"Response not have unknown property (not in schema): login": false
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'uuid' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'uuid'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'name' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'name'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'email' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'email'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'age' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'age'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'phone' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'phone'": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'role' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'role'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'locale'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'notify' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'notify'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'personal_data_access' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'personal_data_access'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response not have unknown property (not in schema): login": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				71
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": false,
+					"Required field 'uuid' is set": true,
+					"Check type 'uuid'": true,
+					"Required field 'name' is set": true,
+					"Check type 'name'": true,
+					"Required field 'email' is set": true,
+					"Check type 'email'": true,
+					"Required field 'age' is set": true,
+					"Check type 'age'": true,
+					"Required field 'phone' is set": true,
+					"Check type 'phone'": false,
+					"Required field 'role' is set": true,
+					"Check type 'role'": true,
+					"Check type 'locale'": true,
+					"Required field 'notify' is set": true,
+					"Check type 'notify'": true,
+					"Required field 'personal_data_access' is set": true,
+					"Check type 'personal_data_access'": true,
+					"Body is correct": false,
+					"Response not have unknown property (not in schema): login": false
+				}
+			]
+		},
+		{
+			"id": "fc8312f7-d20e-45d1-86f3-19ba46960801",
+			"name": "user/{id}",
+			"url": "https://api.stand-bugs.qastart.ru/user/400",
+			"time": 42,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": false,
+				"Required field 'uuid' is set": true,
+				"Check type 'uuid'": true,
+				"Required field 'name' is set": true,
+				"Check type 'name'": true,
+				"Required field 'email' is set": true,
+				"Check type 'email'": true,
+				"Required field 'age' is set": true,
+				"Check type 'age'": true,
+				"Required field 'phone' is set": false,
+				"Check type 'phone'": false,
+				"Required field 'role' is set": true,
+				"Check type 'role'": true,
+				"Check type 'locale'": true,
+				"Required field 'notify' is set": true,
+				"Check type 'notify'": true,
+				"Required field 'personal_data_access' is set": true,
+				"Check type 'personal_data_access'": true,
+				"Body is correct": false,
+				"Response not have unknown property (not in schema): login": false
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'uuid' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'uuid'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'name' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'name'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'email' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'email'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'age' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'age'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'phone' is set": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Check type 'phone'": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'role' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'role'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'locale'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'notify' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'notify'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'personal_data_access' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'personal_data_access'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response not have unknown property (not in schema): login": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				42
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": false,
+					"Required field 'uuid' is set": true,
+					"Check type 'uuid'": true,
+					"Required field 'name' is set": true,
+					"Check type 'name'": true,
+					"Required field 'email' is set": true,
+					"Check type 'email'": true,
+					"Required field 'age' is set": true,
+					"Check type 'age'": true,
+					"Required field 'phone' is set": false,
+					"Check type 'phone'": false,
+					"Required field 'role' is set": true,
+					"Check type 'role'": true,
+					"Check type 'locale'": true,
+					"Required field 'notify' is set": true,
+					"Check type 'notify'": true,
+					"Required field 'personal_data_access' is set": true,
+					"Check type 'personal_data_access'": true,
+					"Body is correct": false,
+					"Response not have unknown property (not in schema): login": false
+				}
+			]
+		},
+		{
+			"id": "29153cca-a122-4988-8d1b-cec31d1b8cfe",
+			"name": "user/{id}",
+			"url": "https://api.stand-bugs.qastart.ru/user/399",
+			"time": 56,
+			"responseCode": {
+				"code": 201,
+				"name": "CREATED"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": true,
+				"Required field 'uuid' is set": true,
+				"Check type 'uuid'": true,
+				"Required field 'name' is set": true,
+				"Check type 'name'": true,
+				"Required field 'email' is set": true,
+				"Check type 'email'": true,
+				"Required field 'age' is set": true,
+				"Check type 'age'": true,
+				"Required field 'phone' is set": true,
+				"Check type 'phone'": false,
+				"Required field 'role' is set": true,
+				"Check type 'role'": true,
+				"Check type 'locale'": true,
+				"Required field 'notify' is set": true,
+				"Check type 'notify'": true,
+				"Required field 'personal_data_access' is set": true,
+				"Check type 'personal_data_access'": true,
+				"Body is correct": false,
+				"Response not have unknown property (not in schema): message, login": false
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'uuid' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'uuid'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'name' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'name'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'email' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'email'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'age' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'age'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'phone' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'phone'": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Required field 'role' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'role'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'locale'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'notify' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'notify'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Required field 'personal_data_access' is set": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'personal_data_access'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response not have unknown property (not in schema): message, login": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				56
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": true,
+					"Required field 'uuid' is set": true,
+					"Check type 'uuid'": true,
+					"Required field 'name' is set": true,
+					"Check type 'name'": true,
+					"Required field 'email' is set": true,
+					"Check type 'email'": true,
+					"Required field 'age' is set": true,
+					"Check type 'age'": true,
+					"Required field 'phone' is set": true,
+					"Check type 'phone'": false,
+					"Required field 'role' is set": true,
+					"Check type 'role'": true,
+					"Check type 'locale'": true,
+					"Required field 'notify' is set": true,
+					"Check type 'notify'": true,
+					"Required field 'personal_data_access' is set": true,
+					"Check type 'personal_data_access'": true,
+					"Body is correct": false,
+					"Response not have unknown property (not in schema): message, login": false
+				}
+			]
+		},
+		{
+			"id": "95007b75-6ef4-46f6-b3a6-7df6bb1f5da2",
+			"name": "user/{id}",
+			"url": "https://api.stand-bugs.qastart.ru/user/400",
+			"time": 48,
+			"responseCode": {
+				"code": 301,
+				"name": "MOVED PERMANENTLY"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": true,
+				"Check type 'message'": true,
+				"Body is correct": true,
+				"Response not have unknown property (not in schema): ": true
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check type 'message'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response not have unknown property (not in schema): ": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				48
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": true,
+					"Check type 'message'": true,
+					"Body is correct": true,
+					"Response not have unknown property (not in schema): ": true
+				}
+			]
+		},
+		{
+			"id": "93e6602d-030f-4eea-84b7-b070e51752bc",
+			"name": "filterUsersByName",
+			"url": "https://api.stand-bugs.qastart.ru/users?name=Nikolay",
+			"time": 66,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": false
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				66
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": false
+				}
+			]
+		},
+		{
+			"id": "43dd53e1-7a1a-4427-ab92-b54ff4565685",
+			"name": "filterUsersByName&Email",
+			"url": "https://api.stand-bugs.qastart.ru/users?name=Nikolay&email=test7@gmail.com",
+			"time": 77,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": false
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				77
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": false
+				}
+			]
+		},
+		{
+			"id": "9d1fd0c7-5987-4fc9-a431-9e1058c93d6c",
+			"name": "filterUsersByEmail",
+			"url": "https://api.stand-bugs.qastart.ru/users?email=test7@gmail.com",
+			"time": 62,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": false
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				62
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": false
+				}
+			]
+		},
+		{
+			"id": "cec1c3b6-5c0a-4702-b0df-2ab8f1c25f4d",
+			"name": "getComments",
+			"url": "https://cdn/server.php",
+			"time": 21,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Access-Token is present in request": true,
+				"Content-Type is present in response": true,
+				"Response time is less than 200ms": true,
+				"Is JSON": true,
+				"Response have a message": false
+			},
+			"testPassFailCounts": {
+				"Access-Token is present in request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present in response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response have a message": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Access-Token is present in request": true,
+					"Content-Type is present in response": true,
+					"Response time is less than 200ms": true,
+					"Is JSON": true,
+					"Response have a message": false
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 897,
+	"collection": {
+		"requests": [
+			{
+				"id": "3aedbd2d-c70c-4adc-8bce-775d54436b51",
+				"method": "POST"
+			},
+			{
+				"id": "26319eef-a732-4458-bc8d-f8ca3a0e7219",
+				"method": "POST"
+			},
+			{
+				"id": "20c111ec-cd33-44d2-9581-193aa06debcc",
+				"method": "GET"
+			},
+			{
+				"id": "fba4a060-746d-41cd-82bd-c0e857f4ea8d",
+				"method": "POST"
+			},
+			{
+				"id": "fc8312f7-d20e-45d1-86f3-19ba46960801",
+				"method": "GET"
+			},
+			{
+				"id": "29153cca-a122-4988-8d1b-cec31d1b8cfe",
+				"method": "PUT"
+			},
+			{
+				"id": "95007b75-6ef4-46f6-b3a6-7df6bb1f5da2",
+				"method": "DELETE"
+			},
+			{
+				"id": "93e6602d-030f-4eea-84b7-b070e51752bc",
+				"method": "GET"
+			},
+			{
+				"id": "43dd53e1-7a1a-4427-ab92-b54ff4565685",
+				"method": "GET"
+			},
+			{
+				"id": "9d1fd0c7-5987-4fc9-a431-9e1058c93d6c",
+				"method": "GET"
+			},
+			{
+				"id": "cec1c3b6-5c0a-4702-b0df-2ab8f1c25f4d",
+				"method": "POST"
+			}
+		]
+	}
+}

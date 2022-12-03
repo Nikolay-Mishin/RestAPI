@@ -1,0 +1,741 @@
+{
+	"info": {
+		"_postman_id": "cd82d629-05d1-42c0-87c4-8cf5d64aff4e",
+		"name": "QA/Start Rest API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23817721"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var { uuid, email } = pm.response.json();\r",
+									"if (uuid) {\r",
+									"    pm.environment.set(\"uuid\", uuid);\r",
+									"    pm.environment.set(\"emailNew\", email);\r",
+									"}\r",
+									"\r",
+									"validateResp({\r",
+									"    \"message\": \"string\",\r",
+									"    \"uuid\": \"integer\",\r",
+									"    \"name\": \"string\",\r",
+									"    \"email\": \"string\",\r",
+									"}, [\"message\", \"uuid\", \"name\", \"email\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"notify\": {{notify}},\r\n    \"personal_data_access\": {{personal_data_access}},\r\n    \"locale\": \"{{locale}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var { token, uuid } = dataJson;\r",
+									"var _uuid = parseInt(pm.environment.get(\"uuid\"));\r",
+									"\r",
+									"//1. We have all the declared fields in the response\r",
+									"pm.test(\"Response contains access\", function () {\r",
+									"   pm.expect(dataJson).to.have.property(\"token\");\r",
+									"});\r",
+									"\r",
+									"pm.test(`Verify that current user (uuid = ${uuid}) is signUp user (uuid = ${_uuid})`, function () {\r",
+									"    if (_uuid === uuid) {\r",
+									"        pm.environment.set(\"token\", token);\r",
+									"        pm.environment.set(\"token_expired_in\", );\r",
+									"    }\r",
+									"    pm.expect(uuid).to.eql(_uuid);\r",
+									"});\r",
+									"\r",
+									"validateResp({\r",
+									"    \"message\": \"string\",\r",
+									"    \"uuid\": \"string\", // integer\r",
+									"    \"token\": \"string\",\r",
+									"}, [\"message\", \"uuid\", \"token\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"validateResp({\r",
+									"    \"page\": \"integer\",\r",
+									"    \"per_page\": \"integer\",\r",
+									"    \"total_pages\": \"integer\",\r",
+									"    \"data\": \"array\",\r",
+									"}, [\"page\", \"per_page\", \"total_pages\", \"data\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var { uuid } = pm.response.json();\r",
+									"if (uuid) pm.environment.set(\"uuidNew\", uuid);\r",
+									"\r",
+									"validateResp({\r",
+									"    \"uuid\": \"integer\",\r",
+									"    \"name\": \"string\",\r",
+									"    \"email\": \"string\",\r",
+									"    \"age\": \"integer\",\r",
+									"    \"phone\": \"number\", // string\r",
+									"    \"role\": \"string\",\r",
+									"    \"locale\": \"string\",\r",
+									"    \"notify\": \"boolean\",\r",
+									"    \"personal_data_access\": \"boolean\",\r",
+									"}, [\"uuid\", \"name\", \"email\", \"age\", \"phone\", \"role\", \"notify\", \"personal_data_access\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"age\": {{age}},\r\n    \"phone\": \"{{randomPhone}}\",\r\n    \"role\": \"{{role}}\",\r\n    \"locale\": \"{{locale}}\",\r\n    \"notify\": {{notify}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"validateResp({\r",
+									"    \"uuid\": \"integer\",\r",
+									"    \"name\": \"string\",\r",
+									"    \"email\": \"string\",\r",
+									"    \"age\": \"integer\",\r",
+									"    \"phone\": \"number\", // string\r",
+									"    \"role\": \"string\",\r",
+									"    \"locale\": \"string\",\r",
+									"    \"notify\": \"boolean\",\r",
+									"    \"personal_data_access\": \"boolean\",\r",
+									"}, [\"uuid\", \"name\", \"email\", \"age\", \"phone\", \"role\", \"notify\", \"personal_data_access\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/{{uuidNew}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"{{uuidNew}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"validateResp({\r",
+									"    //\"message\": \"string\", // not in spec\r",
+									"    \"uuid\": \"integer\",\r",
+									"    \"name\": \"string\",\r",
+									"    \"email\": \"string\",\r",
+									"    //\"login\": \"string\", // not in spec\r",
+									"    \"age\": \"integer\",\r",
+									"    \"phone\": \"number\", // string\r",
+									"    \"role\": \"string\",\r",
+									"    \"locale\": \"string\",\r",
+									"    \"notify\": \"boolean\",\r",
+									"    \"personal_data_access\": \"boolean\",\r",
+									"}, [/*\"message\",*/ \"uuid\", \"name\", \"email\", /*\"login\",*/ \"age\", \"phone\", \"role\", \"notify\", \"personal_data_access\"]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"age\": {{age}},\r\n    \"phone\": \"{{phone}}\",\r\n    \"role\": \"{{roleUpdate}}\",\r\n    \"locale\": \"{{locale}}\",\r\n    \"notify\": {{notify}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/{{uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"validateResp({\r",
+									"    \"message\": \"string\"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/{{uuidNew}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"{{uuidNew}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "filters",
+			"item": [
+				{
+					"name": "filterUsersByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users?name={{name}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterUsersByName&Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users?name={{name}}&email={{email}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{name}}"
+								},
+								{
+									"key": "email",
+									"value": "{{email}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filterUsersByEmail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users?email={{email}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chat",
+			"item": [
+				{
+					"name": "getComments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"getComments\",\r\n    \"data\": {\r\n        \"users\": \"{{dataRoot}}/users.json\",\r\n        \"comments\": \"{{dataRoot}}/comments.json\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}",
+							"host": [
+								"{{server}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "Access-Token",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// === Refresh token ===",
+					"",
+					"// baseUrl",
+					"var url = pm.environment.get(\"url\");",
+					"// endpoint авторизации",
+					"var authPath = pm.environment.get(\"authPath\");",
+					"// requestUrl",
+					"var urlAuth = url + authPath;",
+					"// email пользователя для авторизации",
+					"var email = pm.environment.get(\"email\");",
+					"// пароль пользователя для авторизации",
+					"var password = pm.environment.get(\"password\");",
+					"// срок жизни токена (по умолчанию 3600 с)",
+					"var token_expired_time = parseInt(pm.environment.get(\"token_expired_time\"));",
+					"// время окончания жизни токена (в формате timestamp - по умолчанию = 0)",
+					"var token_expired_in = parseInt(pm.environment.get(\"token_expired_in\")) || 0;",
+					"// текущее время (в формате timestamp)",
+					"var timestamp = Date.now();",
+					"",
+					"// метод обновления токена",
+					"var refreshToken = () => {",
+					"    // отправка запроса на сервер",
+					"    pm.sendRequest({",
+					"        url: urlAuth,",
+					"        method: \"POST\", // метод запроса",
+					"        // заголовки",
+					"        header: {",
+					"            \"content-type\": \"application/json\"",
+					"        },",
+					"        // тело запроса",
+					"        body: JSON.stringify({ email, password })",
+					"    }, function (err, response) { // callback-функция, вызываемая при получении ответа",
+					"        var resp = response.json(); // парсим ответ",
+					"        console.log(err || resp);",
+					"        var { token } = resp; // вытаскиваем токен из объекта ответа",
+					"        // перезаписываем время жизни токена",
+					"        token_expired_in = timestamp + token_expired_time * 1000;",
+					"        // устанавливаем время окончания жизни токена",
+					"        pm.environment.set(\"token_expired_in\", token_expired_in);",
+					"        pm.environment.set(\"token\", token); // уставливаем токен",
+					"        console.log(token);",
+					"    });",
+					"}",
+					"",
+					"console.log(timestamp);",
+					"console.log(token_expired_in);",
+					"",
+					"// обновляем токен, если текущее время больше либо равно времени окончания жизни токена",
+					"if (timestamp >= token_expired_in) refreshToken();",
+					"",
+					"// === Generate datetime for now and token ===",
+					"",
+					"var addZero = (sep, ...numbList) => numbList.map((numb) => (numb < 10 ? \"0\" : \"\") + numb).join(sep);",
+					"",
+					"// For todays date",
+					"Date.prototype.today = function () { ",
+					"    return addZero(\"/\", this.getDate(), this.getMonth() + 1, this.getFullYear());",
+					"}",
+					"",
+					"// For the time now",
+					"Date.prototype.timeNow = function () {",
+					"    return addZero(\":\", this.getHours(), this.getMinutes() + 1, this.getSeconds());",
+					"}",
+					"",
+					"// For todays date",
+					"Date.prototype.today = function () { ",
+					"    return addZero(\"/\", this.getDate(), this.getMonth() + 1, this.getFullYear());",
+					"}",
+					"",
+					"// For the datetime",
+					"Date.prototype.datetime = function () {",
+					"    return this.today() + \" \" + this.timeNow();",
+					"}",
+					"",
+					"var datetime = new Date().datetime();",
+					"",
+					"console.log(datetime);",
+					"",
+					"var datetimeToken = new Date(token_expired_in).datetime();",
+					"",
+					"console.log(datetimeToken);",
+					"",
+					"// === Generate random special char ===",
+					"",
+					"var specialChars = pm.environment.get(\"specialChars\"); // + \"\\u{20ac}\";",
+					"//pm.environment.set(\"specialChars\", specialChars);",
+					"",
+					"var getSpecialChar = (s = specialChars, i = 0) => s.substr(i, 1);",
+					"",
+					"// s - example set of special chars as a string in no particular order",
+					"var randomSpecialChar = (s = specialChars) => {",
+					"    // generating a random index into the string and extracting the character at that position",
+					"    return getSpecialChar(s, Math.floor(s.length * Math.random()), 1);",
+					"}",
+					"",
+					"pm.environment.set(\"randomSpecialChar\", randomSpecialChar());",
+					"",
+					"console.log(\"randomSpecialChar: \" + pm.environment.get(\"randomSpecialChar\"));",
+					"",
+					"// === Generate random phone number ===",
+					"",
+					"/**",
+					" * Returns a random integer between min (inclusive) and max (inclusive).",
+					" * The value is no lower than min (or the next integer greater than min",
+					" * if min isn't an integer) and no greater than max (or the next integer",
+					" * lower than max if max isn't an integer).",
+					" * Using Math.round() will give you a non-uniform distribution!",
+					" */",
+					"function getRandomInt(min, max) {",
+					"    min = Math.ceil(min);",
+					"    max = Math.floor(max);",
+					"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+					"}",
+					"",
+					"setRandomPhone = () => {",
+					"    var phoneLengthMin = parseInt(pm.environment.get(\"phoneLengthMin\"));",
+					"    var countryCode = pm.environment.get(\"countryCode\");",
+					"    var phoneCode = pm.environment.get(\"phoneCode\");",
+					"    var randomPhone = countryCode + phoneCode;",
+					"    while (randomPhone.replace('+', '').length < phoneLengthMin) randomPhone += getRandomInt(0, 9);",
+					"    console.log(randomPhone);",
+					"    pm.environment.set(\"randomPhone\", randomPhone);",
+					"}",
+					"",
+					"setRandomPhone();",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"method = pm.request.method;",
+					"url = pm.environment.get(\"url\");",
+					"path = request.name;",
+					"dataJson = pm.response.json();",
+					"",
+					"console.log(request);",
+					"console.log(pm.request);",
+					"console.log(method);",
+					"console.log(url);",
+					"console.log(path);",
+					"console.log(dataJson);",
+					"",
+					"message = dataJson.message;",
+					"headersRequired = {",
+					"    request: [\"Access-Token\"],",
+					"    response: [\"Content-Type\"]",
+					"};",
+					"methods = [",
+					"    {",
+					"        list: [\"GET\", \"DELETE\"],",
+					"        codeList: [200],",
+					"        msg: \"Verify status code is 200\"",
+					"    },",
+					"    {",
+					"        list: [\"POST\", \"PUT\"],",
+					"        codeList: [200, 201, 202],",
+					"        msg: \"Verify POST request\"",
+					"    }",
+					"];",
+					"",
+					"verifyMethod = () => {",
+					"    var method = methods.find((method) => method.list.includes(method));",
+					"    if (!method) return;",
+					"    var { msg, codeList } = method;",
+					"    pm.test(msg, () => pm.expect(pm.response.code).to.be.oneOf(codeList));",
+					"}",
+					"",
+					"// type - specify the type of object",
+					"// required - specify requires properties",
+					"// properties - describe the properties",
+					"validateResp = (properties = {}, required = [], data = dataJson, type = \"object\") => {",
+					"    console.log(pm.response);",
+					"    console.log(dataJson);",
+					"    properties = Object.fromEntries(Object.entries(properties).map(([prop, type]) => {",
+					"        type = type === 'integer' || type === 'float' ? 'number' : type;",
+					"        if (required.includes(prop)) {",
+					"            pm.test(`Required field '${prop}' is set`, function () {",
+					"                pm.expect(dataJson).to.have.property(prop);",
+					"            });",
+					"        }",
+					"        pm.test(`Check type '${prop}'`, function () {",
+					"            console.log(dataJson[prop]);",
+					"            console.log(typeof dataJson[prop]);",
+					"            console.log(dataJson[prop].constructor.name);",
+					"            var _typeof = type === 'array' ? dataJson[prop].constructor.name.toLowerCase() : typeof dataJson[prop];",
+					"            pm.expect(_typeof).to.eql(type);",
+					"        });",
+					"        return [prop, { \"type\": type }]",
+					"    }));",
+					"",
+					"    //validation schema",
+					"    var schema = { type, required, properties };",
+					"    console.log(schema);",
+					"",
+					"    // validate data by schema",
+					"    // checkRecursive - false",
+					"    // banUnknownProperties - true",
+					"    var result = tv4.validateMultiple(data, schema, false, true);",
+					"    var { valid, errors, missing } = result;",
+					"    console.log(tv4);",
+					"    console.log(result);",
+					"    // get errors? if not valid",
+					"    if (!valid) {",
+					"        console.error(errors);",
+					"        errors.forEach(({name, message}) => console.error(`${name}! ${message}`));",
+					"        if (missing.length) console.error(missing);",
+					"    }",
+					"",
+					"    // verify response body",
+					"    pm.test(\"Body is correct\", () => pm.expect(valid).to.be.true);",
+					"",
+					"    // verify that response properties equals schema properties",
+					"    var respPropList = Object.keys(dataJson);",
+					"    var unknownPropList = [];",
+					"    respPropList.forEach((prop) => properties.hasOwnProperty(prop) ? prop : unknownPropList.push(prop));",
+					"    if (unknownPropList.length) console.error(unknownPropList);",
+					"    pm.test(`Response not have unknown property (not in schema): ${unknownPropList.join(\", \")}`, () => {",
+					"        pm.expect(unknownPropList).to.be.empty;",
+					"    });",
+					"}",
+					"",
+					"validateHeaders = (headers = {}) => {",
+					"    Object.keys(Object.assign(headersRequired, headers)).forEach((key) => {",
+					"        headersRequired[key].forEach((h) => pm.test(`${h} is present in ${key}`, () => pm[key].to.have.header(h)));",
+					"    });",
+					"}",
+					"",
+					"validateRequestHeaders = (...headers) => validateHeaders({request: headers});",
+					"validateResponseHeaders = (...headers) => validateHeaders({response: headers});",
+					"",
+					"verifyMethod();",
+					"validateHeaders();",
+					"",
+					"pm.test(\"Response time is less than 200ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(200);",
+					"});",
+					"",
+					"// Correct response format JSON",
+					"pm.test(\"Is JSON\", () => pm.response.to.have.jsonBody());",
+					"",
+					"pm.test(\"Response have a message\", function () {",
+					"    if (message) {",
+					"        console.log(message);",
+					"        pm.environment.set(\"message\", message);",
+					"    }",
+					"    pm.expect(dataJson).to.have.property(\"message\");",
+					"});",
+					"",
+					"[...pm.environment.get(\"specialChars\")].forEach((char) => char); // console.log(char)",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://api.stand.qastart.ru",
+			"type": "string"
+		}
+	]
+}
